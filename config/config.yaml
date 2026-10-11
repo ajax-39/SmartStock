@@ -1,0 +1,116 @@
+# SmartStock Configuration
+
+# Paths
+paths:
+  data_root: "data"
+  raw_data: "data/raw"
+  processed_data: "data/processed"
+  cache: "data/cache"
+  models: "models/saved"
+  logs: "logs"
+
+# Kaggle Dataset
+kaggle:
+  dataset_id: "debashis74017/stock-market-data-nifty-50-stocks-1-min-data"
+  # Note: kagglehub downloads to cache by default
+  # Windows: C:\Users\<Username>\.cache\kagglehub\datasets\debashis74017\stock-market-data-nifty-50-stocks-1-min-data\versions\<version>
+  # Linux/Mac: ~/.cache/kagglehub/datasets/debashis74017/stock-market-data-nifty-50-stocks-1-min-data/versions/<version>
+  # Files can be copied to data/raw using scripts/download_kaggle_data.py
+  expected_files: []
+
+# Spark Configuration
+spark:
+  app_name: "SmartStock"
+  master: "local[*]" # Use local[*] for development, will be overridden for GCP
+  executor_memory: "4g"
+  driver_memory: "2g"
+  log_level: "WARN"
+
+# Data Processing
+data:
+  # Stock symbols to exclude from training (reserved for testing)
+  test_stocks: [] # Will be determined after dataset inspection
+  # Minimum data points required per stock
+  min_data_points: 10000
+  # Date range (will be discovered from data)
+  train_end_date: null
+  test_start_date: null
+
+# Data Ingestion
+ingestion:
+  # Dataset source path (can be overridden by --path CLI arg or SMARTSTOCK_DATASET_PATH env var)
+  source_path: null # If null, uses paths.raw_data
+
+  # Column auto-detection
+  auto_detect_columns: true
+
+  # Canonical column names (targets after mapping)
+  timestamp_col: "timestamp"
+  symbol_col: "symbol"
+  open_col: "open"
+  high_col: "high"
+  low_col: "low"
+  close_col: "close"
+  volume_col: "volume"
+
+  # Data quality thresholds
+  max_null_percentage: 10.0 # Reject columns with >10% nulls
+  max_duplicate_percentage: 5.0 # Warn if >5% duplicates
+
+  # Processing options
+  chunk_size: 100000 # Rows per chunk for memory efficiency
+  validate_prices: true # Validate OHLC relationships
+  remove_duplicates: true
+
+  # Output format
+  output_format: "parquet" # parquet or csv
+
+# Feature Engineering
+features:
+  # Technical indicators
+  price_windows: [5, 10, 20, 60, 120] # minutes
+  volatility_windows: [10, 30, 60]
+  volume_windows: [5, 20, 60]
+
+  # Target definition
+  prediction_horizon: 60 # minutes ahead
+  return_threshold: 0.01 # 1% return to classify as "favorable"
+
+# Model Training
+model:
+  algorithm: "RandomForestClassifier" # Spark MLlib
+  test_size: 0.2
+  validation_size: 0.1
+  random_seed: 42
+
+  # Hyperparameters (will be tuned)
+  rf_num_trees: 100
+  rf_max_depth: 10
+  rf_min_instances_per_node: 1
+
+# Backtesting
+backtesting:
+  initial_capital: 100000 # INR
+  transaction_cost_pct: 0.001 # 0.1% per trade
+  max_positions: 5
+  position_size_pct: 0.2 # 20% of capital per position
+  stop_loss_pct: 0.05 # 5% stop loss
+  take_profit_pct: 0.10 # 10% take profit
+
+# Dashboard
+dashboard:
+  host: "localhost"
+  port: 8501
+  title: "SmartStock Investment Recommendations"
+
+# Google Cloud (for deployment)
+gcp:
+  project_id: "" # To be set during deployment
+  region: "us-central1"
+  bucket_name: "" # To be created
+  dataproc_cluster: "smartstock-cluster"
+
+# Logging
+logging:
+  level: "INFO"
+  format: "%(asctime)s - %(name)s - %(levelname)s - %(message)s"

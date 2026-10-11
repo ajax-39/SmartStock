@@ -1,0 +1,91 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv
+pip-log.txt
+pip-delete-this-directory.txt
+.pytest_cache/
+.coverage
+htmlcov/
+*.egg-info/
+dist/
+build/
+
+# Jupyter Notebook
+.ipynb_checkpoints
+*.ipynb_checkpoints/
+
+# IDEs
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# Data files (keep directory structure with .gitkeep but ignore all data/metadata contents)
+data/raw/*
+!data/raw/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+data/cache/*
+!data/cache/.gitkeep
+*.csv
+*.parquet
+*.snappy
+*.pq
+*.json.gz
+ingestion_metadata*.json
+data_quality*.json
+dataset_inspection*.json
+
+# Kagglehub cache (if downloaded to project)
+.cache/
+kagglehub/
+
+# Model artifacts
+models/saved/*
+!models/saved/.gitkeep
+*.model
+*.joblib
+*.pkl
+*.h5
+
+# Logs
+logs/
+*.log
+
+# Environment variables and credentials
+.env
+.env.local
+*.json.secret
+*credentials*.json
+service-account*.json
+
+# Spark
+metastore_db/
+derby.log
+spark-warehouse/
+
+# HDFS
+hdfs/
+
+# OS
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# Temporary files
+tmp/
+temp/
+*.tmp
+*.bak
+
+# Configuration (may contain sensitive data)
+config/local.yaml
+config/secrets.yaml

@@ -1,0 +1,60 @@
+# SmartStock Dependencies
+# Python 3.13.x (verified)
+#
+# Key compatibility notes:
+#   - PySpark 3.5.x does NOT support Python 3.13 at runtime (typing module changes).
+#     PySpark 4.0 added Python 3.13 support via SPARK-50306.
+#   - PySpark 4.0 requires pyarrow >= 11.0.0 (SPARK-50657).
+#   - PySpark 4.0 requires numpy >= 1.21 (SPARK-45179).
+#   - PySpark 4.0 requires pandas >= 2.2.3 at runtime (SPARK-49801).
+#   - Java 17 or 21 recommended for Spark 4.0; Java 11 still works.
+#
+# Install:  pip install -r requirements.txt
+# Java:     install OpenJDK 17+ separately and set JAVA_HOME.
+
+# ── Big Data / Spark ──────────────────────────────────────────────────────────
+pyspark==4.0.4
+pyarrow==20.0.0
+
+# ── Kaggle download ───────────────────────────────────────────────────────────
+kagglehub==1.0.2
+
+# ── Data processing ───────────────────────────────────────────────────────────
+pandas==2.2.3
+numpy==2.2.6
+
+# ── Machine learning (supplementary; core ML uses Spark MLlib) ────────────────
+scikit-learn==1.6.1
+
+# ── Visualisation ─────────────────────────────────────────────────────────────
+matplotlib==3.10.3
+seaborn==0.13.2
+plotly==6.1.2
+
+# ── Dashboard ─────────────────────────────────────────────────────────────────
+streamlit==1.45.1
+
+# ── Optional REST API (Phase 6+) ─────────────────────────────────────────────
+fastapi==0.115.12
+uvicorn[standard]==0.34.3
+pydantic==2.11.5
+
+# ── Google Cloud (Phase 7) ────────────────────────────────────────────────────
+google-cloud-storage==2.19.0
+google-cloud-dataproc==5.16.1
+
+# ── Configuration ─────────────────────────────────────────────────────────────
+pyyaml==6.0.2
+python-dotenv==1.1.0
+
+# ── Testing ───────────────────────────────────────────────────────────────────
+pytest==8.3.5
+pytest-cov==6.1.0
+
+# ── Development utilities ────────────────────────────────────────────────────
+black==25.1.0
+flake8==7.2.0
+
+# ── Runtime utilities ─────────────────────────────────────────────────────────
+tqdm==4.67.1
+python-dateutil==2.9.0.post0
