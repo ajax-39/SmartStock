@@ -398,10 +398,12 @@ class HistoricalDataLoader:
                     f"Neither a 'symbol' column exists nor can a ticker be derived from filename."
                 )
 
-        # Parse timestamp strictly
+        # Parse timestamp strictly and ensure microsecond precision for big data Parquet compatibility
         df['timestamp'] = pd.to_datetime(df['timestamp'], errors='coerce')
         valid_ts_mask = df['timestamp'].notna()
         df = df[valid_ts_mask]
+        if len(df) > 0:
+            df['timestamp'] = df['timestamp'].astype('datetime64[us]')
 
         # Ensure volume exists as float64
         if 'volume' not in df.columns:

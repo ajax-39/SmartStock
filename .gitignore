@@ -33,8 +33,17 @@ data/raw/*
 !data/raw/.gitkeep
 data/processed/*
 !data/processed/.gitkeep
+data/cleaned/*
+!data/cleaned/.gitkeep
+data/features/*
+!data/features/.gitkeep
+data/labels/*
+!data/labels/.gitkeep
 data/cache/*
 !data/cache/.gitkeep
+data/backtesting/*
+!data/backtesting/.gitkeep
+hadoop/
 *.csv
 *.parquet
 *.snappy
@@ -43,6 +52,12 @@ data/cache/*
 ingestion_metadata*.json
 data_quality*.json
 dataset_inspection*.json
+cleaning_metadata*.json
+cleaning_quality*.json
+feature_metadata*.json
+feature_quality*.json
+label_metadata*.json
+label_quality*.json
 
 # Kagglehub cache (if downloaded to project)
 .cache/
